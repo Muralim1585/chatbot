@@ -67,4 +67,17 @@ def match_rule(rules, message):
 				phrase = match.group(1)
 	return response, phrase
 
-print(match_rule(rules, "Do you remember your last birthday"))
+def replace_pronouns(message):
+	message = message.lower()
+	if "me" in message:
+		return re.sub("me", "you", message)
+	if "my" in message:
+		return re.sub("my", "your", message)
+	if "your" in message:
+		return re.sub("your", "my", message)
+	if "you" in message:
+		return re.sub("you", "me", message)
+
+print(replace_pronouns("my last birthday"))
+print(replace_pronouns("when you went to Florida"))
+print(replace_pronouns("I had my own castle"))

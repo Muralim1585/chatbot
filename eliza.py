@@ -30,9 +30,9 @@ rules = {
 		"What about {0}",
 		"Yes... And?"],
 	"Do you think (.*)": [
-		"If {0}? Absolutely.",
+		"If {0} Absolutely.",
 		"No chance"],
-	"If (.*)": [
+	"[Ii]f (.*)": [
 		"Do you really think it's likely that {0}",
 		"Do you wish that {0}",
 		"What do you think about {0}",
@@ -40,11 +40,11 @@ rules = {
 }
 
 def respond(message):
-	if message.endswith("?"):
-		bot_message = random.choice(responses["question"])
-	else:
-		bot_message = random.choice(responses["statement"])
-	return bot_message
+	response, phrase = match_rule(rules, message)
+	if "{0}" in response:
+		phrase = replace_pronouns(phrase)
+		response = response.format(phrase)
+	return response
 
 def send_message(message):
 	message = input(user_template.format(message))
@@ -77,7 +77,6 @@ def replace_pronouns(message):
 		return re.sub("your", "my", message)
 	if "you" in message:
 		return re.sub("you", "me", message)
+	return message
 
-print(replace_pronouns("my last birthday"))
-print(replace_pronouns("when you went to Florida"))
-print(replace_pronouns("I had my own castle"))
+send_message('')

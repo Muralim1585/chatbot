@@ -1,19 +1,24 @@
 import spacy
 
+# English
+print('English')
 nlp_en = spacy.load('en')
 
-print(nlp_en.vocab.vectors_length)
+doc_en = nlp_en('cat')
 
-doc_en = nlp_en("hello world")
+aux_list_en = [nlp_en('can'), nlp_en('dog')]
 
-for token in doc_en:
-	print("{}: {}".format(token, token.vector[:5]))
+for i in aux_list_en:
+	print("Similarity between {} and {}: {}".format(doc_en, i, doc_en.similarity(i)))
 
+
+# Portuguese
+print('Português')
 nlp_pt = spacy.load('en')
 
-print(nlp_pt.vocab.vectors_length)
+doc_pt = nlp_pt("gato")
 
-doc_pt = nlp_pt("olá mundo")
+aux_list_pt = [nlp_pt('fato'), nlp_pt('cachorro')]
 
-for token in doc_pt:
-	print("{}: {}".format(token, token.vector[:5]))
+for i in aux_list_pt:
+	print("Similaridade entre {} e {}: {}".format(doc_pt, i, doc_pt.similarity(i)))
